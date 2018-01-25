@@ -1,0 +1,48 @@
+version: '3.1'
+services:
+  zabbix-server:
+    image: "zabbix/zabbix-server-mysql:alpine-3.4.5"
+    ports:
+      - "10051:10051"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .zbx_env_db_mysql
+    user: root
+#    networks:
+#      - zbx_net
+
+  zabbix-web-nginx-mysql:
+    image: "zabbix/zabbix-web-nginx-mysql:alpine-3.4.5"
+    ports:
+      - "10080:80"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .zbx_env_db_mysql
+      - .zbx_env_web
+    user: root
+#    networks:
+#      - zbx_net
+
+  zabbix-mysql-server:
+    image: "mysql:5.7"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./zabbix/mysql/var/lib/mysql:/var/lib/mysql
+    env_file:
+      - .zbx_env_db_mysql
+    user: root
+#    networks:
+#      - zbx_net
+
+#networks:
+#  zbx_net:
+#    driver: bridge
+#    driver_opts:
+#      com.docker.network.enable_ipv6: "false"
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 172.16.238.0/24
+#        - gateway: 172.16.238.1

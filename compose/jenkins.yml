@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+  jenkins:
+    image: 'jenkins:2.60.3-alpine'
+    restart: unless-stopped
+    environment:
+      TZ: 'Asia/Shanghai'
+      LANG: 'en_US.UTF-8'
+#      LANG: 'zh_CN.UTF-8'
+      JAVA_ARGS: '-Djava.awt.headless=true -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8'
+    volumes:
+      - './jenkins:/var/jenkins_home'
+    ports:
+      - '8080:8080'
+      - '50000:50000'

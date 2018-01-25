@@ -1,0 +1,6 @@
+Hello Everyone, welcome to using devops toolsets.
+to get startup,run below as root
+  docker-compose -f ldap.yml -f redmine.yml -f zabbix.yml -f jenkins.yml up -d
+to shutdown&destroy,run below as root
+  docker-compose -f ldap.yml -f redmine.yml -f zabbix.yml -f jenkins.yml down
+

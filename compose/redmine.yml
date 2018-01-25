@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  redmine:
+    image: redmine:3.4.4
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      REDMINE_DB_MYSQL: redmine-db
+      REDMINE_DB_PASSWORD: admin
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./redmine/usr/src/redmine/files:/usr/src/redmine/files
+
+  redmine-db:
+    image: mysql:5.7
+#rewrite default command of image to add some parameters to support mutilanguage
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: redmine
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./redmine/db/var/lib/mysql:/var/lib/mysql
